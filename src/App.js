@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { usePosition } from "use-position";
 
 function App() {
+  const [weather, setWeather] = useState();
+  const { latitude, longitude } = usePosition();
+  const getWeatherData = async (lat, lon) => {
+    const key = "a58d145c61f02afb13dc1a78a319164d";
+
+    try {
+      const { data } = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
+      );
+      setWeather(data);
+    } catch {
+      alert("ERROR OCCURRED WHILE RECEIVING DATA");
+    }
+  };
+
+  console.log(weather);
+
+  useEffect(() => {
+    latitude && longitude && getWeatherData(latitude, longitude);
+  }, [latitude, longitude]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>weather forecast</h1>
     </div>
   );
 }
