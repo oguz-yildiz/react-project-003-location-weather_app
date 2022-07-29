@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { usePosition } from "use-position";
+import Weather from "./components/Weather";
 
 function App() {
   const [weather, setWeather] = useState();
@@ -19,15 +20,15 @@ function App() {
     }
   };
 
-  console.log(weather);
-
   useEffect(() => {
     latitude && longitude && getWeatherData(latitude, longitude);
   }, [latitude, longitude]);
 
+  console.log(weather);
   return (
     <div className="App">
       <h1>weather forecast</h1>
+      <Weather weather={weather} />
     </div>
   );
 }
