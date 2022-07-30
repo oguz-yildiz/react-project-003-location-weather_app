@@ -8,11 +8,11 @@ function App() {
   const [weather, setWeather] = useState();
   const { latitude, longitude } = usePosition();
   const getWeatherData = async (lat, lon) => {
-    const key = "a58d145c61f02afb13dc1a78a319164d";
+    const key = process.env.REACT_APP_WEATHER_API_KEY;
 
     try {
       const { data } = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric`
       );
       setWeather(data);
     } catch {
